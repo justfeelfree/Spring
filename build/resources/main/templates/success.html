@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layout/layout">
+<body>
+<th:block layout:fragment="navi">
+    <li class="nav-item"><a class="nav-link" href="/service">Find all WebServices</a></li>
+    <li class="nav-item"><a class="nav-link" href="/findone">Find WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/delete">Delete WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/add">Add WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/update">Update WebService</a></li>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Authentication and authorization menu.</div>
+                <div class="panel-body">
+                    <div>
+                        <form method="post" class="form-group" action="/logout">
+                            <input class="btn btn-primary" type="submit" value="Sign Out"/>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="message : ${messages}">
+                            <td th:text="${message}">Message</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+
+</body>
+</html>
