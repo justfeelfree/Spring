@@ -21,7 +21,7 @@ import java.util.List;
 public class FindOneController {
 
     @RequestMapping(method = RequestMethod.GET)
-    ModelAndView home() {
+    ModelAndView findOne() {
         ModelAndView modelAndView = new ModelAndView("findone");
         List<WebService> services = new ArrayList<>();
         BasicController.addUserName(modelAndView);

@@ -7,6 +7,7 @@
     <li class="nav-item"><a class="nav-link" href="/delete">Delete WebService</a></li>
     <li class="nav-item"><a class="nav-link" href="/add">Add WebService</a></li>
     <li class="nav-item"><a class="nav-link" href="/update">Update WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/examples">Queries Examples</a></li>
 </th:block>
 <th:block layout:fragment="content">
     <div class="row">
@@ -22,7 +23,7 @@
                         <input class="btn btn-primary" type="submit" value="Fill Data"/>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     </form>
-                    <form method="post" class="form-group" action="/cleandata">
+                    <form method="post" class="form-group" action="/clean">
                         <input class="btn btn-primary" type="submit" value="Clean Data"/>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     </form>

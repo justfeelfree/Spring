@@ -1,6 +1,7 @@
 package com.firstfewlines.controller;
 
 import com.firstfewlines.domain.WebService;
+import com.firstfewlines.service.AdvancedService;
 import com.firstfewlines.service.BasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -25,6 +26,9 @@ class BasicController {
 
     @Autowired
     BasicService basicService;
+
+    @Autowired
+    AdvancedService advancedService;
 
     @RequestMapping(value = "/service", method = RequestMethod.GET)
     ModelAndView service() {
@@ -107,9 +111,9 @@ class BasicController {
         messages.add("Trying to fill in the data base...");
         ModelAndView modelAndView = new ModelAndView("service");
         try {
-            messages.add(addWebServiceGetMessage(1, "AlfaCS_EQ_WSPartnerBaseInfo10", "2005-05-22", BigDecimal.valueOf(100.1)));
-            messages.add(addWebServiceGetMessage(2, "AlfaCS_EQ_WSPartnerReport10", "2010-07-13", BigDecimal.valueOf(55.88)));
-            messages.add(addWebServiceGetMessage(3, "AlfaCS_EQ_WSPartnerReportHistory10", "2011-01-08", BigDecimal.valueOf(560.00)));
+            messages.add(addWebServiceGetMessage(1, "AlfaCS_EQ_WSPartnerBaseInfo22", "2005-05-22", BigDecimal.valueOf(100.1)));
+            messages.add(addWebServiceGetMessage(2, "AlfaCS_EQ_WSPartnerReport11", "2010-07-13", BigDecimal.valueOf(55.88)));
+            messages.add(addWebServiceGetMessage(3, "AlfaCS_EQ_WSPartnerReportHistory14", "2011-01-08", BigDecimal.valueOf(560.00)));
             messages.add(addWebServiceGetMessage(4, "AlfaCS_EQ_WSProductCatalogPackageTarif10", "2008-02-01", BigDecimal.valueOf(140.55)));
             messages.add(addWebServiceGetMessage(5, "AlfaCS_EQ_WSStatementDepositInfo13", "2009-12-01", BigDecimal.valueOf(546.566)));
             messages.add(addWebServiceGetMessage(6, "AlfaCS_EQ_WSAccountCloseRestriction10", "2015-08-15", BigDecimal.valueOf(879.41)));
@@ -125,7 +129,7 @@ class BasicController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/cleandata", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @RequestMapping(value = "/clean", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     ModelAndView cleanData() throws Exception {
         List<String> messages = new ArrayList<>();
@@ -147,11 +151,55 @@ class BasicController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/named", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    ModelAndView named() throws Exception {
+        List<String> messages = new ArrayList<>();
+        messages.add("Trying to find all with a NamedQuery...");
+        ModelAndView modelAndView = new ModelAndView("examples");
+        List<WebService> services;
+        try {
+            services = advancedService.findAllByNameAndPriceCondition();
+
+            modelAndView.addObject("messages", messages);
+            modelAndView.addObject("services", services);
+        }
+        catch (Exception ex){
+            messages.add(ex.getMessage());
+            modelAndView.addObject("messages", messages);
+        }
+        addUserName(modelAndView);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/simple", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    ModelAndView simple() throws Exception {
+        List<String> messages = new ArrayList<>();
+        messages.add("Trying to find all with a Simple Query...");
+        ModelAndView modelAndView = new ModelAndView("examples");
+        List<WebService> services;
+        try {
+            services = advancedService.simpleQuery();
+
+            modelAndView.addObject("messages", messages);
+            modelAndView.addObject("services", services);
+        }
+        catch (Exception ex){
+            messages.add(ex.getMessage());
+            modelAndView.addObject("messages", messages);
+        }
+        addUserName(modelAndView);
+
+        return modelAndView;
+    }
+
     private Sort orderBy() {
         return new Sort(Sort.Direction.ASC, "id");
     }
 
-    @RequestMapping(value = "/added", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @RequestMapping(value = "/post-add", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     ModelAndView addStudent(@RequestParam Integer id,
                             @RequestParam String name,
@@ -174,7 +222,7 @@ class BasicController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/found", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @RequestMapping(value = "/post-findone", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     ModelAndView findById(@RequestParam Integer id) throws Exception {
 
@@ -202,7 +250,7 @@ class BasicController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/deleted", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @RequestMapping(value = "/post-delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     ModelAndView deleteById(@RequestParam Integer id) throws Exception {
 
@@ -229,7 +277,7 @@ class BasicController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/updated", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @RequestMapping(value = "/post-update", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     ModelAndView updateStudent(@RequestParam Integer id,
                                @RequestParam String name,

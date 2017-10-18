@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="web_service", schema = "public")
+@NamedQuery(name="WebService.findAllByNameAndPriceCondition", query = "SELECT w FROM WebService w WHERE w.name like CONCAT('%', 10)")
 public class WebService {
 
     @Transient

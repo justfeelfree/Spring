@@ -7,6 +7,7 @@
     <li class="nav-item"><a class="nav-link" href="/delete">Delete WebService</a></li>
     <li class="nav-item"><a class="nav-link" href="/add">Add WebService</a></li>
     <li class="nav-item"><a class="nav-link" href="/update">Update WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/examples">Queries Examples</a></li>
 </th:block>
 <th:block layout:fragment="content">
     <div class="row">
@@ -15,7 +16,7 @@
                 <div class="panel-heading">Find WebService operation</div>
                 <div class="panel-body">
                     <div>
-                        <form method="post" class="form-group" action="/found">
+                        <form method="post" class="form-group" action="/post-findone">
                             <div class="form-group">
                                 <label for="id">ID:</label>
                                 <input class="form-control" type="number" name="id" id="id" maxlength="10" autofocus="autofocus"/>

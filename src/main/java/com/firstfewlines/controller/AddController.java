@@ -21,13 +21,15 @@ public class AddController {
     @Autowired
     BasicService basicService;
 
+
     @RequestMapping(method = RequestMethod.GET)
-    ModelAndView home() {
+    ModelAndView add() {
         ModelAndView modelAndView = new ModelAndView("add");
         BasicController.addUserName(modelAndView);
         modelAndView.addObject("services", basicService.getWebServices(orderBy()));
         return modelAndView;
     }
+
 
     private Sort orderBy() {
         return new Sort(Sort.Direction.ASC, "id");

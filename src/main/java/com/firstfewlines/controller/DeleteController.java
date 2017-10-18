@@ -22,7 +22,7 @@ public class DeleteController {
     BasicService basicService;
 
     @RequestMapping(method = RequestMethod.GET)
-    ModelAndView home() {
+    ModelAndView delete() {
         ModelAndView modelAndView = new ModelAndView("delete");
         BasicController.addUserName(modelAndView);
         modelAndView.addObject("services", basicService.getWebServices(orderBy()));

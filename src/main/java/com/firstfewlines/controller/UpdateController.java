@@ -22,7 +22,7 @@ public class UpdateController {
     BasicService basicService;
 
     @RequestMapping(method = RequestMethod.GET)
-    ModelAndView home() {
+    ModelAndView update() {
         ModelAndView modelAndView = new ModelAndView("update");
         BasicController.addUserName(modelAndView);
         modelAndView.addObject("services", basicService.getWebServices(orderBy()));
