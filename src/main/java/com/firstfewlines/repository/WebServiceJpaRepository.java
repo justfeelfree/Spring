@@ -17,7 +17,7 @@ public interface WebServiceJpaRepository extends JpaRepository<WebService, Integ
     @Query("SELECT w FROM WebService w WHERE w.price >= 100")
     List<WebService> simpleQuery();
 
-    @Query(value = "SELECT * FROM public.\"web_service\" WHERE name like '%11'", nativeQuery = true)
+    @Query(value = "SELECT * FROM public.\"web_service\" WHERE name like '%13'", nativeQuery = true)
     List<WebService> nativeQuery();
 
 
