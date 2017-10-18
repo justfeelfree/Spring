@@ -32,9 +32,9 @@ public class BasicRestController {
         Iterable<WebService> iterable = basicService.getWebServices(orderBy());
         iterable.forEach(webServices::add);
         if(webServices.isEmpty()) {
-            return new ResponseEntity<List<WebService>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<WebService>>(webServices, HttpStatus.OK);
+        return new ResponseEntity<>(webServices, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/rest/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,10 +43,10 @@ public class BasicRestController {
         if (webService == null) {
             return new ResponseEntity<WebService>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<WebService>(webService, HttpStatus.OK);
+        return new ResponseEntity<>(webService, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/rest/", method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createWebService(@RequestBody WebService webService, UriComponentsBuilder ucBuilder) {
         if (basicService.exists(webService.getId())) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -55,28 +55,37 @@ public class BasicRestController {
         basicService.addWebService(webService);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(webService.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/rest/{id}").buildAndExpand(webService.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/rest/fill", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> fillWebService(@RequestBody List<WebService> webServices) {
+        webServices.stream()
+                .filter(webService -> !basicService.exists(webService.getId()))
+                .forEach(basicService::addWebService);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/rest/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<WebService> deleteWebService(@PathVariable("id") int id) {
         WebService webService = basicService.findOne(id);
         if (webService == null) {
-            return new ResponseEntity<WebService>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         basicService.deleteById(id);
-        return new ResponseEntity<WebService>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<WebService>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/rest/", method = RequestMethod.DELETE)
     public ResponseEntity<WebService> deleteAll() {
         basicService.deleteAll();
-        return new ResponseEntity<WebService>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "/rest/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/rest/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WebService> updateWebService(@PathVariable("id") int id, @RequestBody WebService webService) throws Exception {
         WebService currentService = basicService.findOne(id);
 

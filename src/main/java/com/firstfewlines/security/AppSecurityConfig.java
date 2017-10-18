@@ -27,7 +27,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/", "/rest/").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
@@ -40,6 +40,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/logout-success")
                 .permitAll();
         http.csrf().csrfTokenRepository(csrfTokenRepository());
+        http.csrf().disable();
     }
 
     private CsrfTokenRepository csrfTokenRepository()
