@@ -84,7 +84,7 @@ class BasicController {
     ModelAndView logoutSuccess() throws Exception {
         List<String> messages = new ArrayList<>();
         messages.add("You have successfully logged out.");
-        ModelAndView modelAndView = new ModelAndView("success");
+        ModelAndView modelAndView = new ModelAndView("home");
         if(!getUserName().isEmpty()) {
             modelAndView.addObject("username", getUserName());
             modelAndView.addObject("logout", getUserName() + ", Sign Out");
