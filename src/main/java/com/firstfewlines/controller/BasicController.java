@@ -113,7 +113,7 @@ class BasicController {
         try {
             messages.add(addWebServiceGetMessage(1, "AlfaCS_EQ_WSPartnerBaseInfo22", "2005-05-22", BigDecimal.valueOf(100.1)));
             messages.add(addWebServiceGetMessage(2, "AlfaCS_EQ_WSPartnerReport11", "2010-07-13", BigDecimal.valueOf(55.88)));
-            messages.add(addWebServiceGetMessage(3, "AlfaCS_EQ_WSPartnerReportHistory14", "2011-01-08", BigDecimal.valueOf(560.00)));
+            messages.add(addWebServiceGetMessage(3, "AlfaCS_EQ_WSPartnerReportHistory11", "2011-01-08", BigDecimal.valueOf(560.00)));
             messages.add(addWebServiceGetMessage(4, "AlfaCS_EQ_WSProductCatalogPackageTarif10", "2008-02-01", BigDecimal.valueOf(140.55)));
             messages.add(addWebServiceGetMessage(5, "AlfaCS_EQ_WSStatementDepositInfo13", "2009-12-01", BigDecimal.valueOf(546.566)));
             messages.add(addWebServiceGetMessage(6, "AlfaCS_EQ_WSAccountCloseRestriction10", "2015-08-15", BigDecimal.valueOf(879.41)));
@@ -155,8 +155,8 @@ class BasicController {
     @ResponseStatus(value = HttpStatus.OK)
     ModelAndView named() throws Exception {
         List<String> messages = new ArrayList<>();
-        messages.add("Trying to find all with a NamedQuery...");
-        ModelAndView modelAndView = new ModelAndView("examples");
+        messages.add("Trying to find with a NamedQuery...");
+        ModelAndView modelAndView = new ModelAndView("example");
         List<WebService> services;
         try {
             services = advancedService.findAllByNameAndPriceCondition();
@@ -177,14 +177,56 @@ class BasicController {
     @ResponseStatus(value = HttpStatus.OK)
     ModelAndView simple() throws Exception {
         List<String> messages = new ArrayList<>();
-        messages.add("Trying to find all with a Simple Query...");
-        ModelAndView modelAndView = new ModelAndView("examples");
+        messages.add("Trying to find with a Simple Query...");
+        ModelAndView modelAndView = new ModelAndView("example");
         List<WebService> services;
         try {
             services = advancedService.simpleQuery();
 
             modelAndView.addObject("messages", messages);
             modelAndView.addObject("services", services);
+        }
+        catch (Exception ex){
+            messages.add(ex.getMessage());
+            modelAndView.addObject("messages", messages);
+        }
+        addUserName(modelAndView);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/native", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    ModelAndView nativeQuery() throws Exception {
+        List<String> messages = new ArrayList<>();
+        messages.add("Trying to find with a Native Query...");
+        ModelAndView modelAndView = new ModelAndView("example");
+        List<WebService> services;
+        try {
+            services = advancedService.nativeQuery();
+
+            modelAndView.addObject("messages", messages);
+            modelAndView.addObject("services", services);
+        }
+        catch (Exception ex){
+            messages.add(ex.getMessage());
+            modelAndView.addObject("messages", messages);
+        }
+        addUserName(modelAndView);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/criteria", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    ModelAndView criteriaQuery() throws Exception {
+        List<String> messages = new ArrayList<>();
+        messages.add("Trying to find with a Criteria Query...");
+        ModelAndView modelAndView = new ModelAndView("example");
+        List<WebService> services;
+        try {
+            modelAndView.addObject("messages", messages);
+            modelAndView.addObject("services", basicService.getWithCriteria());
         }
         catch (Exception ex){
             messages.add(ex.getMessage());

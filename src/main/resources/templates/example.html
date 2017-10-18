@@ -7,24 +7,36 @@
     <li class="nav-item"><a class="nav-link" href="/delete">Delete WebService</a></li>
     <li class="nav-item"><a class="nav-link" href="/add">Add WebService</a></li>
     <li class="nav-item"><a class="nav-link" href="/update">Update WebService</a></li>
-    <li class="nav-item active"><a class="nav-link" href="/examples">Queries Examples</a></li>
+    <li class="nav-item active"><a class="nav-link" href="/example">Queries Example</a></li>
 </th:block>
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-md-4 col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Examples of @Query, @NamedQuery, Native Query, Criteria API.</div>
+                <div class="panel-heading">Example of @Query, @NamedQuery, Native Query, Criteria API.</div>
                 <div class="panel-body">
 
                     <p>@NamedQuery "SELECT w FROM WebService w WHERE w.name like CONCAT('%', 10)":</p>
                     <form method="post" class="form-group" action="/named">
-                        <input class="btn btn-primary" type="submit" value="NamedQuery FindAll"/>
+                        <input class="btn btn-primary" type="submit" value="Named Query"/>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     </form>
 
                     <p>@Query "SELECT w FROM WebService w WHERE w.price >= 100":</p>
                     <form method="post" class="form-group" action="/simple">
-                        <input class="btn btn-primary" type="submit" value="SimpleQuery FindAll"/>
+                        <input class="btn btn-primary" type="submit" value="Simple Query"/>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    </form>
+
+                    <p>Native Query "SELECT * FROM public.&#34;web_service&#39; WHERE name like '%10'":</p>
+                    <form method="post" class="form-group" action="/native">
+                        <input class="btn btn-primary" type="submit" value="Native Query"/>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    </form>
+
+                    <p>Criteria API Query (name endswith 11):</p>
+                    <form method="post" class="form-group" action="/criteria">
+                        <input class="btn btn-primary" type="submit" value="Criteria Query"/>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     </form>
 

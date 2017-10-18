@@ -2,14 +2,11 @@ package com.firstfewlines.service;
 
 import com.firstfewlines.domain.WebService;
 import com.firstfewlines.repository.WebServicesRepository;
+import com.firstfewlines.repository.specification.WebServiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.List;
 
 @Service
 public class BasicService {
@@ -42,5 +39,8 @@ public class BasicService {
         return repository.exists(id);
     }
 
+    public Iterable<WebService> getWithCriteria(){
+        return repository.findAll(WebServiceSpecification.nameEndsWith("10"));
+    }
 
 }

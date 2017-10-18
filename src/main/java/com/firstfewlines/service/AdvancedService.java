@@ -24,4 +24,8 @@ public class AdvancedService {
     public List<WebService> simpleQuery() {
         return repository.simpleQuery();
     }
+
+    public List<WebService> nativeQuery() {
+        return repository.nativeQuery();
+    }
 }
