@@ -10,7 +10,7 @@ buildscript {
     }
 }
 
-group 'com.firstfewlines'
+group 'com.example'
 version '1.0.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -28,4 +28,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
     compile "org.springframework.boot:spring-boot-devtools:$springBootVersion"
     runtime 'org.postgresql:postgresql:42.1.1'
+    testCompile group: 'org.springframework', name: 'spring-test', version: '5.0.0.RELEASE'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
 }
