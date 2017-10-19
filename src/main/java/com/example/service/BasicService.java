@@ -27,6 +27,10 @@ public class BasicService {
         return repository.findAll(sort);
     }
 
+    public Iterable<WebService> getWebServices(){
+        return repository.findAll();
+    }
+
     public void deleteAll() {
         repository.deleteAll();
     }
@@ -39,8 +43,8 @@ public class BasicService {
         return repository.exists(id);
     }
 
-    public Iterable<WebService> getWithCriteria(){
-        return repository.findAll(WebServiceSpecification.nameEndsWith("10"));
+    public Iterable<WebService> getWithCriteria(String suffix){
+        return repository.findAll(WebServiceSpecification.nameEndsWith(suffix));
     }
 
 }

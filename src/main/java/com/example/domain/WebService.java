@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="web_service", schema = "public")
-@NamedQuery(name="WebService.findAllByNameAndPriceCondition", query = "SELECT w FROM WebService w WHERE w.name like CONCAT('%', 10)")
+@NamedQuery(name="WebService.findAllByName", query = "SELECT w FROM WebService w WHERE w.name like CONCAT('%', 10)")
 @JsonIgnoreProperties("jsonData")
 public class WebService {
 
@@ -53,14 +53,11 @@ public class WebService {
     }
 
     public void setDateContract(String dateContract) throws Exception {
-        System.out.println("DATA string: " + dateContract);
+        if(dateContract.isEmpty()) throw new IllegalArgumentException("Error. Date must not be empty.");
         Date contract;
-
         if (dateContract.matches("\\d{4}[-/]\\d{2}[-/]\\d{2}")) {
-            System.out.println("PARSE yyyy-MM-dd");
             contract = setDF.parse(dateContract);
         } else if (dateContract.matches("\\d{2}[-/]\\d{2}[-/]\\d{4}")){
-            System.out.println("PARSE dd-MM-yyyy");
             contract = getDF.parse(dateContract);
         } else {
             throw new ParseException("Error. Can't parse " + dateContract, 0);

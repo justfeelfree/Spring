@@ -17,8 +17,8 @@ public class AdvancedService {
     @Autowired
     WebServiceJpaRepository repository;
 
-    public List<WebService> findAllByNameAndPriceCondition() {
-        return repository.findAllByNameAndPriceCondition();
+    public List<WebService> findAllByName() {
+        return repository.findAllByName();
     }
 
     public List<WebService> simpleQuery() {
@@ -27,10 +27,6 @@ public class AdvancedService {
 
     public List<WebService> nativeQuery() {
         return repository.nativeQuery();
-    }
-
-    public List<WebService> getByPrice(BigDecimal price) {
-        return repository.getByPrice(price);
     }
 
     public List<WebService> getAllWithJsonData() {

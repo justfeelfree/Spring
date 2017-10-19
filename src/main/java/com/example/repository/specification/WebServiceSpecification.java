@@ -19,7 +19,7 @@ public class WebServiceSpecification {
         };
     }*/
 
-    public static Specification<WebService> nameEndsWith(final String Name) {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), "%" + "11");
+    public static Specification<WebService> nameEndsWith(final String suffix) {
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), "%" + suffix);
     }
 }

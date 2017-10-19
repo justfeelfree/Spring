@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WebServicesRepository extends CrudRepository<WebService, Integer>, JpaSpecificationExecutor<WebService> {
     Iterable<WebService> findAll(Sort sort);
+    Iterable<WebService> findAll();
 }

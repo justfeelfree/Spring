@@ -30,9 +30,6 @@ class BasicController {
     @Autowired
     AdvancedService advancedService;
 
-    @Autowired
-    BasicRestController restController;
-
     @RequestMapping(value = "/service", method = RequestMethod.GET)
     ModelAndView service() {
         ModelAndView modelAndView = new ModelAndView("service");
@@ -162,7 +159,7 @@ class BasicController {
         ModelAndView modelAndView = new ModelAndView("example");
         List<WebService> services;
         try {
-            services = advancedService.findAllByNameAndPriceCondition();
+            services = advancedService.findAllByName();
 
             modelAndView.addObject("messages", messages);
             modelAndView.addObject("services", services);
@@ -229,7 +226,7 @@ class BasicController {
         List<WebService> services;
         try {
             modelAndView.addObject("messages", messages);
-            modelAndView.addObject("services", basicService.getWithCriteria());
+            modelAndView.addObject("services", basicService.getWithCriteria("11"));
         }
         catch (Exception ex){
             messages.add(ex.getMessage());
@@ -238,10 +235,6 @@ class BasicController {
         addUserName(modelAndView);
 
         return modelAndView;
-    }
-
-    private Sort orderBy() {
-        return new Sort(Sort.Direction.ASC, "id");
     }
 
     @RequestMapping(value = "/post-add", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
@@ -402,5 +395,9 @@ class BasicController {
             modelAndView.addObject("username", getUserName());
             modelAndView.addObject("logout", getUserName() + ", Sign Out");
         }
+    }
+
+    private Sort orderBy() {
+        return new Sort(Sort.Direction.ASC, "id");
     }
 }
