@@ -20,7 +20,8 @@ apply plugin: 'org.springframework.boot'
 test {
     filter {
         //specific test class
-        includeTestsMatching "com.example.domain.WebServiceTest"
+        includeTestsMatching "com.example.service.AdvancedServiceTest"
+        includeTestsMatching "com.example.service.BasicServiceTest"
     }
 }
 

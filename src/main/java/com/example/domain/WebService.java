@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="web_service", schema = "public")
-@NamedQuery(name="WebService.findAllByName", query = "SELECT w FROM WebService w WHERE w.name like CONCAT('%', 10)")
+@NamedQuery(name="WebService.findAllByNameEndsWith10", query = "SELECT w FROM WebService w WHERE w.name like CONCAT('%', 10)")
 @JsonIgnoreProperties("jsonData")
 public class WebService {
 
@@ -22,15 +22,16 @@ public class WebService {
 
     @Id
     @Column(name="id")
-    int id;
+    private Integer id;
     @Column(name="name")
-    String name;
+    private String name;
     @Column(name="date_contract")
-    Date dateContract;
+    private Date dateContract;
     @Column(name="price")
-    BigDecimal price;
+    private BigDecimal price;
     @Column(name="json_data")
-    String jsonData;
+    @Convert(converter = MyConverter.class)
+    private MyJson jsonData;
 
     public String getName() {
         return name;
@@ -80,11 +81,11 @@ public class WebService {
         this.price = price;
     }
 
-    public String getJsonData() {
+    public MyJson getJsonData() {
         return jsonData;
     }
 
-    public void setJsonData(String jsonData) {
+    public void setJsonData(MyJson jsonData) {
         this.jsonData = jsonData;
     }
 
@@ -92,6 +93,10 @@ public class WebService {
     }
 
     public String toString() {
-        return String.format("Student[id: [%d],\tname: [%s],\tdate of contract: [%s]], price: [%s]", getId(), getName(), getDateContract(), getPrice());
+        return String.format("Student[id: [%s],\tname: [%s],\tdate of contract: [%s]], price: [%s]",
+                id == null ? "null" : id.toString(),
+                getName().isEmpty() ? "null" : getName(),
+                dateContract == null ? "null" : getDateContract(),
+                price == null ? "null" : getPrice());
     }
 }

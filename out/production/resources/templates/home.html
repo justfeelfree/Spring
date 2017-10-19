@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layout/layout">
+<body>
+<th:block layout:fragment="navi">
+    <li class="nav-item"><a class="nav-link" href="/service">Find all WebServices</a></li>
+    <li class="nav-item"><a class="nav-link" href="/findone">Find WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/delete">Delete WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/add">Add WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/update">Update WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/example">Queries Example</a></li>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Welcome to SpringDEMO application, please log in to use.</div>
+
+                <div class="panel-body">
+                    <div>
+                        <form method="post" class="form-group" action="/login">
+                            <div class="form-group">
+                                <label for="username">User Name:</label>
+                                <input class="form-control" type="text" name="username" id="username" maxlength="20" autofocus="autofocus"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input class="form-control" type="password" name="password" id="password" maxlength="20"/>
+                            </div>
+
+                            <input class="btn btn-primary" type="submit" value="Sign in"/>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="message : ${messages}">
+                            <td th:text="${message}">Message</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</th:block>
+</body>
+</html>

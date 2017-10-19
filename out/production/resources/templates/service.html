@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layout/layout">
+<body>
+<th:block layout:fragment="navi">
+    <li class="nav-item active"><a class="nav-link" href="/service">Find all WebServices</a></li>
+    <li class="nav-item"><a class="nav-link" href="/findone">Find WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/delete">Delete WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/add">Add WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/update">Update WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/example">Queries Example</a></li>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Find all and preparing operations</div>
+                <div class="panel-body">
+                    <form method="get" class="form-group" action="/service">
+                        <input class="btn btn-primary" type="submit" value="Find all WebServices"/>
+                    </form>
+                    <p>Prepare database:</p>
+                    <form method="post" class="form-group" action="/fill">
+                        <input class="btn btn-primary" type="submit" value="Fill Data"/>
+                    </form>
+                    <form method="post" class="form-group" action="/clean">
+                        <input class="btn btn-primary" type="submit" value="Clean Data"/>
+                    </form>
+                </div>
+
+                <div class="panel-footer">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="message : ${messages}">
+                            <td th:text="${message}">Message</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">WebServices List</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Date of Contract</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="service : ${services}">
+                                <td th:text="${service.getId()}">ID</td>
+                                <td th:text="${service.getName()}">Name</td>
+                                <td th:text="${service.getDateContract()}">Date of Contract</td>
+                                <td th:text="${service.getPrice()}">Price</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

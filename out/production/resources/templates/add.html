@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html layout:decorator="layout/layout">
+<body>
+<th:block layout:fragment="navi">
+    <li class="nav-item"><a class="nav-link" href="/service">Find all WebServices</a></li>
+    <li class="nav-item"><a class="nav-link" href="/findone">Find WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/delete">Delete WebService</a></li>
+    <li class="nav-item active"><a class="nav-link" href="/add">Add WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/update">Update WebService</a></li>
+    <li class="nav-item"><a class="nav-link" href="/example">Queries Example</a></li>
+
+</th:block>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Add WebService operation</div>
+                <div class="panel-body">
+                    <div>
+                        <form method="post" class="form-group" action="/post-add">
+                            <div class="form-group">
+                                <label for="id">ID:</label>
+                                <input class="form-control" type="number" name="id" id="id" maxlength="10" autofocus="autofocus"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input class="form-control" type="text" name="name" id="name" maxlength="50"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dateContract">Date Of Contract:</label>
+                                <input class="form-control" type="date" name="dateContract" id="dateContract" maxlength="20"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="price">Price:</label>
+                                <input class="form-control" type="number" name="price" id="price" maxlength="20" step=".01"/>
+                            </div>
+
+                            <input class="btn btn-primary" type="submit" value="Add WebService"/>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="message : ${messages}">
+                            <td th:text="${message}">Message</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">WebServices List</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Date of Contract</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="service : ${services}">
+                                <td th:text="${service.getId()}">ID</td>
+                                <td th:text="${service.getName()}">Name</td>
+                                <td th:text="${service.getDateContract()}">Date of Contract</td>
+                                <td th:text="${service.getPrice()}">Price</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

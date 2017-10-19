@@ -17,19 +17,19 @@ public class AdvancedService {
     @Autowired
     WebServiceJpaRepository repository;
 
-    public List<WebService> findAllByName() {
-        return repository.findAllByName();
+    public List<WebService> findAllByNameEndsWith10() {
+        return repository.findAllByNameEndsWith10();
     }
 
-    public List<WebService> simpleQuery() {
-        return repository.simpleQuery();
+    public List<WebService> getByPriceGreaterOrEquals100() {
+        return repository.getByPriceGreaterOrEquals100();
     }
 
-    public List<WebService> nativeQuery() {
-        return repository.nativeQuery();
+    public List<WebService> nativeQueryNameEndsWith13() {
+        return repository.nativeQueryNameEndsWith13();
     }
 
-    public List<WebService> getAllWithJsonData() {
-        return repository.getAllWithJsonData();
+    public List<WebService> nativeQueryPriceEquals100(BigDecimal price) {
+        return repository.nativeQueryPriceEquals100(price);
     }
 }

@@ -41,40 +41,14 @@ public class BasicRestController {
         return new ResponseEntity<>(webServices, HttpStatus.OK);
     }
 
-    // without json parse
-    /*@RequestMapping(value = "/rest/price={price}", method = RequestMethod.GET)
-    public ResponseEntity<List<WebService>> getByPrice(@PathVariable BigDecimal price) {
-        List<WebService> webServices = advancedService.getByPrice(price);
-        if(webServices.size() == 0) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(webServices, HttpStatus.OK);
-    }*/
-
-    // with json parse
     @RequestMapping(value = "/rest/price={price}", method = RequestMethod.GET)
     public ResponseEntity<List<WebService>> getByPrice(@PathVariable BigDecimal price) {
-        List<WebService> webServices = advancedService.getAllWithJsonData();
+        List<WebService> webServices = advancedService.nativeQueryPriceEquals100(price);
         if(webServices.size() == 0) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        webServices.forEach(webService -> System.out.println(webService.getJsonData()));
-        ObjectMapper mapper = new ObjectMapper();
-        List<WebService> jsonServices = new ArrayList<>();
-
-        webServices.forEach(webService -> {
-            try {
-                WebService currentService = mapper.readValue(webService.getJsonData(), WebService.class);
-                if (currentService.getPrice().equals(price)) {
-                    jsonServices.add(currentService);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        return new ResponseEntity<>(jsonServices, HttpStatus.OK);
+        return new ResponseEntity<>(webServices, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/rest/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -89,7 +63,7 @@ public class BasicRestController {
     @RequestMapping(value = "/rest/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createWebService(@RequestBody WebService webService, UriComponentsBuilder ucBuilder) {
         if (basicService.exists(webService.getId())) {
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         basicService.addWebService(webService);

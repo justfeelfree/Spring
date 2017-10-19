@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.domain.MyJson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.domain.WebService;
@@ -159,7 +160,7 @@ class BasicController {
         ModelAndView modelAndView = new ModelAndView("example");
         List<WebService> services;
         try {
-            services = advancedService.findAllByName();
+            services = advancedService.findAllByNameEndsWith10();
 
             modelAndView.addObject("messages", messages);
             modelAndView.addObject("services", services);
@@ -181,7 +182,7 @@ class BasicController {
         ModelAndView modelAndView = new ModelAndView("example");
         List<WebService> services;
         try {
-            services = advancedService.simpleQuery();
+            services = advancedService.getByPriceGreaterOrEquals100();
 
             modelAndView.addObject("messages", messages);
             modelAndView.addObject("services", services);
@@ -203,7 +204,7 @@ class BasicController {
         ModelAndView modelAndView = new ModelAndView("example");
         List<WebService> services;
         try {
-            services = advancedService.nativeQuery();
+            services = advancedService.nativeQueryNameEndsWith13();
 
             modelAndView.addObject("messages", messages);
             modelAndView.addObject("services", services);
@@ -378,10 +379,12 @@ class BasicController {
         return message;
     }
 
-    public String getJSON(WebService webService) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        String json;
-        json = mapper.writeValueAsString(webService);
+    public MyJson getJSON(WebService webService) throws JsonProcessingException {
+        MyJson json = new MyJson();
+        json.setId(webService.getId());
+        json.setDateContract(webService.getDateContract());
+        json.setName(webService.getName());
+        json.setPrice(webService.getPrice());
         return json;
     }
 

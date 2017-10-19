@@ -14,14 +14,14 @@ import java.util.List;
  */
 @Repository
 public interface WebServiceJpaRepository extends JpaRepository<WebService, Integer> {
-    List<WebService> findAllByName();
+    List<WebService> findAllByNameEndsWith10();
 
     @Query("SELECT w FROM WebService w WHERE w.price >= 100")
-    List<WebService> simpleQuery();
+    List<WebService> getByPriceGreaterOrEquals100();
 
     @Query(value = "SELECT * FROM public.\"web_service\" WHERE name like '%13'", nativeQuery = true)
-    List<WebService> nativeQuery();
+    List<WebService> nativeQueryNameEndsWith13();
 
-    @Query("SELECT w FROM WebService w WHERE w.jsonData IS NOT NULL")
-    List<WebService> getAllWithJsonData();
+    @Query(value = "SELECT * FROM public.web_service WHERE json_data @> CONCAT('{', '\"price\":', :price, '}')", nativeQuery = true)
+    List<WebService> nativeQueryPriceEquals100(@Param("price") BigDecimal price);
 }
