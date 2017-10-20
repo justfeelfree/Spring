@@ -17,22 +17,22 @@
                 <div class="panel-body">
 
                     <p>@NamedQuery "SELECT w FROM WebService w WHERE w.name like CONCAT('%', 10)":</p>
-                    <form method="post" class="form-group" action="/named">
+                    <form method="post" class="form-group" action="/example/named">
                         <input class="btn btn-primary" type="submit" value="Named Query"/>
                     </form>
 
                     <p>@Query "SELECT w FROM WebService w WHERE w.price >= 100":</p>
-                    <form method="post" class="form-group" action="/simple">
+                    <form method="post" class="form-group" action="/example/simple">
                         <input class="btn btn-primary" type="submit" value="Simple Query"/>
                     </form>
 
                     <p>Native Query "SELECT * FROM public.&#34;web_service&#39; WHERE name like '%13'":</p>
-                    <form method="post" class="form-group" action="/native">
+                    <form method="post" class="form-group" action="/example/native">
                         <input class="btn btn-primary" type="submit" value="Native Query"/>
                     </form>
 
                     <p>Criteria API Query (name endswith 11):</p>
-                    <form method="post" class="form-group" action="/criteria">
+                    <form method="post" class="form-group" action="/example/criteria">
                         <input class="btn btn-primary" type="submit" value="Criteria Query"/>
                     </form>
 
