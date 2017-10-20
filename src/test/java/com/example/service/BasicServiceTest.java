@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.domain.WebService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.gen5.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,7 @@ public class BasicServiceTest {
     private String testWSName = "WSTest10";
     private String testDate = "15-05-2011";
     private int testId = 100;
-    private BigDecimal testPrice = BigDecimal.valueOf(200);
+    private BigDecimal testPrice = BigDecimal.valueOf(200).setScale(2, BigDecimal.ROUND_DOWN);
 
     @Autowired
     private BasicService basicService;
@@ -35,7 +36,7 @@ public class BasicServiceTest {
     @Autowired
     private AdvancedService advancedService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         basicService.deleteAll();
         basicService.addWebService(getTestWebService(1, "AlfaCS_EQ_WSPartnerBaseInfo22", "2005-05-22", BigDecimal.valueOf(100)));
@@ -65,7 +66,7 @@ public class BasicServiceTest {
         assertEquals(webService.getId(), 1);
         assertEquals(webService.getName(), "AlfaCS_EQ_WSPartnerBaseInfo22");
         assertEquals(webService.getDateContract(), "22-05-2005");
-        assertEquals(webService.getPrice(), BigDecimal.valueOf(100));
+        assertEquals(webService.getPrice(), BigDecimal.valueOf(100).setScale(2, BigDecimal.ROUND_DOWN));
     }
 
     @Test

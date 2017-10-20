@@ -2,9 +2,8 @@ package com.example.service;
 
 import com.example.domain.MyJson;
 import com.example.domain.WebService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.gen5.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -28,7 +26,8 @@ public class AdvancedServiceTest {
     private String testWSName = "WSTest10";
     private String testDate = "15-05-2011";
     private int testId = 100;
-    private BigDecimal testPrice = BigDecimal.valueOf(200);
+    private BigDecimal testPrice200 = BigDecimal.valueOf(200).setScale(2, BigDecimal.ROUND_DOWN);
+    private BigDecimal testPrice100 = BigDecimal.valueOf(100).setScale(2, BigDecimal.ROUND_DOWN);
 
     @Autowired
     private BasicService basicService;
@@ -36,7 +35,7 @@ public class AdvancedServiceTest {
     @Autowired
     private AdvancedService advancedService;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         basicService.deleteAll();
         basicService.addWebService(getTestWebService(1, "AlfaCS_EQ_WSPartnerBaseInfo22", "2005-05-22", BigDecimal.valueOf(100)));
@@ -59,7 +58,7 @@ public class AdvancedServiceTest {
     public void getByPriceGreaterOrEquals100() throws Exception {
         List<WebService> webServices = advancedService.getByPriceGreaterOrEquals100();
         assertTrue(webServices.size() == 5);
-        webServices.forEach(webService -> assertTrue(webService.getPrice().compareTo(BigDecimal.valueOf(100)) >= 0));
+        webServices.forEach(webService -> assertTrue(webService.getPrice().compareTo(testPrice100) >= 0));
     }
 
     @Test
@@ -73,7 +72,7 @@ public class AdvancedServiceTest {
     public void getAllWithJsonData() throws Exception {
         List<WebService> webServices = advancedService.nativeQueryPriceEquals100(BigDecimal.valueOf(100));
         assertTrue(webServices.size() == 2);
-        webServices = advancedService.nativeQueryPriceEquals100(BigDecimal.valueOf(200));
+        webServices = advancedService.nativeQueryPriceEquals100(testPrice200);
         assertTrue(webServices.size() == 1);
     }
 

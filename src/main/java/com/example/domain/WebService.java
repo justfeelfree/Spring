@@ -74,7 +74,7 @@ public class WebService {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return price.setScale(2, BigDecimal.ROUND_DOWN);
     }
 
     public void setPrice(BigDecimal price) {

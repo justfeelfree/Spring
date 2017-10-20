@@ -18,11 +18,6 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 test {
-    filter {
-        //specific test class
-        includeTestsMatching "com.example.service.AdvancedServiceTest"
-        includeTestsMatching "com.example.service.BasicServiceTest"
-    }
 }
 
 repositories {
@@ -30,14 +25,17 @@ repositories {
 }
 
 dependencies {
+    //compile 'org.springframework.boot:spring-boot-starter-actuator' //We need this dependency because it provides us a way to monitor our application when it is running.
     compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
     compile "org.springframework.boot:spring-boot-devtools:$springBootVersion"
+    compile 'org.junit:junit5-engine:5.0.0-ALPHA'
+
     runtime 'org.postgresql:postgresql:42.1.1'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "$springBootVersion"
     //testCompile group: 'org.springframework', name: 'spring-test', version: '5.0.0.RELEASE'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    //testCompile group: 'junit', name: 'junit', version: '4.12'
 
 }
